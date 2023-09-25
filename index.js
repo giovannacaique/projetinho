@@ -4,6 +4,9 @@ const app = express();
 const bodyparser = require("body-parser");
 const connection = require("./database/database");
 
+//Para conectar com o BD criado
+const Produto = require("./database/Produto");
+
 connection
     .authenticate()
     .then(() => {
@@ -28,6 +31,9 @@ app.listen(8080, () => {
 });
 
 app.get("/", (req, res) => {
+    Produto.findAll().then(produtos => {
+        console.log(produtos);
+    });
     res.render("index");
 });
 
@@ -38,6 +44,11 @@ app.get("/produto", (req, res) => {
 app.post("/salvarProduto", (req, res) => {
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
-    //res.render("produto");
-    res.send("Form recebido! titulo: " + titulo + "<br>" + "Descroção: " + "<br>" + descricao);
+    Produto.create({
+        titulo : titulo,
+        descricao : descricao
+    }).then(()=>{
+        res.redirect("/");
+    });
+    //res.send("Forms recebido! Titulo: " + titulo + "Descrição: " + descricao);
 });
