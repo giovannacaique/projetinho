@@ -31,10 +31,15 @@ app.listen(8080, () => {
 });
 
 app.get("/", (req, res) => {
-    Produto.findAll().then(produtos => {
-        console.log(produtos);
+    res.render('index');
+});
+
+app.get("/produtosList", (req, res) => {
+    Produto.findAll({ raw: true }).then(produtos => {
+        res.render("produtosList", {
+            produtos : produtos
+        });
     });
-    res.render("index");
 });
 
 app.get("/produto", (req, res) => {
@@ -45,9 +50,9 @@ app.post("/salvarProduto", (req, res) => {
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
     Produto.create({
-        titulo : titulo,
-        descricao : descricao
-    }).then(()=>{
+        titulo: titulo,
+        descricao: descricao
+    }).then(() => {
         res.redirect("/");
     });
     //res.send("Forms recebido! Titulo: " + titulo + "Descrição: " + descricao);
