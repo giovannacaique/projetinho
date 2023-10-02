@@ -1,0 +1,26 @@
+<%- include('../partials/head') %>
+    <%- include('../partials/navbar') %>
+
+            <hr>
+            <h2>Produtos</h2>
+            <hr>
+            <a href="/produto/novo" class="btn btn-success">Criar novo produto</a>
+            <hr>
+            <table class="table table-bordered">
+                <thead>
+                    <td>Titulo</td>
+                    <td>Descrição</td>
+                </thead>
+                <tbody>
+                    <% produtos.forEach(produto=> { %>
+                        <tr>
+                            <td><%= produto.titulo %></td>
+                            <td><%= produto.descricao %></td>
+                            <td>
+                                <button class="btn btn-danger">Deletar</button>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        <%- include('../partials/footer') %>
